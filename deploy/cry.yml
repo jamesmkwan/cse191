@@ -1,0 +1,9 @@
+---
+- name: Provision box
+  hosts: all
+  remote_user: root
+  roles:
+    - cse191
+  vars:
+    cse191_repo: "https://github.com/jamesmkwan/cse191.git"
+    docker_instance_count: 4

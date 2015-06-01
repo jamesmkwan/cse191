@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Problems{% endblock %}
+{% block subtitle %}Problems{% endblock %}
+{% block body %}
+<div>
+    <a href="{{ url_for('free_run') }}">Free run</a>
+</div>
+
+<h3>Problems</h3>
+{% for p in problems %}
+<a href="{{ url_for('test_run', question=p) }}">{{ p }}</a><br>
+{% endfor %}
+{% endblock %}

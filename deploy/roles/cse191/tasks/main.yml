@@ -1,0 +1,70 @@
+---
+- name: Install packages
+  apt:
+    state=present
+    name="{{ item }}"
+  with_items:
+    - python3-pip
+    - python3-dev
+    - python3-crypto
+    - cython3
+    - nginx
+    - git
+    - uwsgi-plugin-python3
+- name: Install python virtualenv
+  pip:
+    executable=pip3
+    state=present
+    name=virtualenv
+- name: Setup nginx
+  copy:
+    src=nginx
+    dest=/etc/nginx/sites-enabled/default
+    mode=0644
+  notify: restart nginx
+- name: Create user
+  user: >
+    name=cse191
+    shell=/bin/bash
+- name: Clone repository
+  git:
+    repo="{{ cse191_repo }}"
+    dest=/home/cse191/cse191
+    force=yes
+    accept_hostkey=yes
+  sudo: yes
+  sudo_user: cse191
+- name: Construct port list
+  template: >
+    src=servers
+    dest=/home/cse191/cse191/web/cse191_web/servers
+- name: Build docker image
+  docker_image: >
+    path=/home/cse191/cse191/lang
+    name=cse191
+- name: Run docker instances
+  docker:
+    image: cse191
+    restart_policy: always
+    memory_limit: 64MB
+    state: reloaded
+    docker_api_version: "1.18"
+    ports:
+    - "{{ item }}:8000"
+    volumes:
+    - /home/cse191/cse191/lang:/data:ro
+  with_sequence: start=8001 count={{ docker_instance_count }}
+- name: Create virtual environment
+  command: /usr/local/bin/virtualenv --system-site-packages /home/cse191/venv creates=/home/cse191/venv
+- name: Install web package
+  command: /home/cse191/venv/bin/python3 setup.py install chdir=/home/cse191/cse191/web
+- name: Copy upstart config
+  copy:
+    src=cse191web.conf
+    dest=/etc/init/cse191web.conf
+    mode=0644
+- name: Run webserver
+  service: >
+    name=cse191web
+    state=restarted
+    enabled=yes

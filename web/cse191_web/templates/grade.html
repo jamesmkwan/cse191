@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{ name }}{% endblock %}
+{% block subtitle %}{{ name }}{% endblock %}
+{% block adds %}
+<script type="text/javascript">
+$(function() {
+    CodeMirror.fromTextArea($("#code")[0], {
+        'lineNumbers': true,
+        viewportMargin: Infinity
+    });
+    CodeMirror.fromTextArea($("#grader")[0], {
+        'lineNumbers': true,
+        viewportMargin: Infinity
+    });
+})
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+{% endblock %}
+{% block body %}
+{% if grade != None %}<pre>{{ grade }}</pre>{% endif %}
+<div>{{ instructions|safe }}</div>
+{% if debug_ != None %}<pre>{{ debug_ }}</pre>{% endif %}
+
+<br>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            Adversary Code (function: main)
+            <textarea name="code" id="code">{{ code }}</textarea><br>
+        </div>
+
+        <div class="col-md-6">
+            Grader Code (function: grader)
+            <textarea name="grader" id="grader">{{ grader }}</textarea>
+        </div>
+    </div>
+<br>
+<button type="submit" name="action" value="grade" class="btn btn-primary">Grade</button>
+<button type="submit" name="action" value="reset_grade" class="btn btn-warning">Reset Grader &amp; Grade</button>
+</form>
+<br>
+{% endblock %}

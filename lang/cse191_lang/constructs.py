@@ -1,0 +1,15 @@
+from collections import namedtuple as t
+
+Str = t('Str', ['str'])
+Num = t('Num', ['num'])
+Id = t('Id', ['id'])
+Bool = t('Bool', ['value'])
+Decl = t('Decl', ['decl'])
+Return = t('Return', ['expr'])
+Assign = t('Assign', ['target', 'expr'])
+Call = t('Call', ['callee', 'params'])
+Index = t('Index', ['array', 'index'])
+Func = t('Func', ['name', 'args', 'stmts'])
+Stmts = t('Stmts', ['stmt', 'rest'])
+If = t('If', ['condition', 'then', 'otherwise'])
+While = t('While', ['condition', 'do'])

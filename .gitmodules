@@ -1,0 +1,6 @@
+[submodule "deploy/roles/docker"]
+	path = deploy/roles/docker
+	url = https://github.com/angstwad/docker.ubuntu.git
+[submodule "docs/_themes"]
+	path = docs/_themes
+	url = https://github.com/mitsuhiko/flask-sphinx-themes.git

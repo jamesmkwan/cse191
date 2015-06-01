@@ -1,0 +1,12 @@
+server {
+    listen 80;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/cse191/uwsgi.sock;
+    }
+
+    location /static/ {
+        alias /home/cse191/cse191/web/cse191_web/static/;
+    }
+}

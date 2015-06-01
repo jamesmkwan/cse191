@@ -1,0 +1,7 @@
+---
+- name: Check apt cache file
+  stat: path=/var/cache/apt
+  register: apt_cache_stat
+- name: Update apt cache (more than 12 hours old)
+  apt: update_cache=yes
+  when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12

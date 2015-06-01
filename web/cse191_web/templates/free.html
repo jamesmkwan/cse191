@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Free Run{% endblock %}
+{% block subtitle %}Free Run{% endblock %}
+{% block adds %}
+<script type="text/javascript">
+$(function() {
+    CodeMirror.fromTextArea($("#code")[0], {
+        'lineNumbers': true,
+        viewportMargin: Infinity
+    });
+})
+</script>
+{% endblock %}
+{% block body %}
+{% if result != None %}<pre>{{ result }}</pre>{% endif %}
+<form method="POST">
+    <textarea name="code" id="code">{{ code }}</textarea>
+<br>
+<button type="submit" class="btn btn-default">Run</button>
+</form>
+<br>
+{% endblock %}

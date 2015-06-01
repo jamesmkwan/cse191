@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE191 - {% block title %}Crypto{% endblock %}</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/main.css" rel="stylesheet">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/javascript/javascript.min.js"></script>
+{% block adds %}
+{% endblock %}
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <div class="navbar-text navbar-right">
+      <a href="/static/help/index.html" target="_blank">Help</a>
+    </div>
+    <h1><a href="/">CSE191</a> <small>{% block subtitle %}{% endblock %}</small></h1>
+  </div>
+</div>
+<div class="container" id="main_container">{% block body %}{% endblock %}</div>
+</body>
+</html>
