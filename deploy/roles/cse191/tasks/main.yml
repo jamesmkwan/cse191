@@ -16,8 +16,43 @@
     executable=pip3
     state=present
     name=virtualenv
-- name: Setup nginx
+- name: Create ssl group
+  group:
+    name=ssl
+    state=present
+  when: nginx_ssl
+- name: Ensure nginx user in ssl group
+  user:
+    name=nginx
+    groups=ssl
+    append=yes
+  when: nginx_ssl
+- name: ssl private dir
+  file:
+    path=/etc/nginx/ssl
+    mode=0750
+    owner=root
+    group=ssl
+    state=directory
+  when: nginx_ssl
+- name: copy ssl certificate
   copy:
+    src="{{ ssl_cert }}"
+    dest=/etc/nginx/ssl/ssl.pem
+    owner=root
+    group=ssl
+    mode=0644
+  when: nginx_ssl
+- name: copy ssl key
+  copy:
+    src="{{ ssl_key }}"
+    dest=/etc/nginx/ssl/ssl.key
+    owner=root
+    group=ssl
+    mode=0640
+  when: nginx_ssl
+- name: Setup nginx
+  template:
     src=nginx
     dest=/etc/nginx/sites-enabled/default
     mode=0644

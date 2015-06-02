@@ -1,0 +1,23 @@
+server {
+    listen 80;
+
+{% if nginx_ssl %}
+    listen 443 ssl;
+
+    ssl_certificate /etc/nginx/ssl/ssl.pem;
+    ssl_certificate_key /etc/nginx/ssl/ssl.key;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers  EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:EECDH+RC4:RSA+RC4:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_timeout 5m;
+{% endif %}
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/cse191/uwsgi.sock;
+    }
+
+    location /static/ {
+        alias /home/cse191/cse191/web/cse191_web/static/;
+    }
+}
