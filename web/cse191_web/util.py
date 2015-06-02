@@ -6,10 +6,14 @@ import os.path
 import random
 
 servers = []
-with open(os.path.join(os.path.dirname(__file__), 'servers'), 'r') as f:
-    for l in f:
-        ip, _, port = l.partition(':')
-        servers.append((ip, int(port)))
+try:
+    servers_file = os.path.join(os.path.dirname(__file__), 'servers')
+    with open(server_file, 'r') as f:
+        for l in f:
+            ip, _, port = l.partition(':')
+            servers.append((ip, int(port)))
+except Exception:
+    print("Could not load %s" % servers_file)
 
 def get_server():
     assert servers, "No servers specified"
