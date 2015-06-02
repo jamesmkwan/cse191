@@ -79,6 +79,7 @@
     name=cse191
 - name: Run docker instances
   docker:
+    name: cse191_{{ item }}
     image: cse191
     restart_policy: always
     memory_limit: 64MB
